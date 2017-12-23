@@ -46,6 +46,22 @@ class SnippetController extends Controller
             ->add('save', SubmitType::class, array('label' => 'Snip'))
             ->getForm();
             
+        $form->handleRequest($request);
+
+    	  if ($form->isSubmitted() && $form->isValid()) {
+        		// $form->getData() holds the submitted values
+        		// but, the original `$task` variable has also been updated
+        		$snippet = $form->getData();
+
+        		// ... perform some action, such as saving the task to the database
+        		// for example, if Task is a Doctrine entity, save it!
+        		$em = $this->getDoctrine()->getManager();
+        		$em->persist($snippet);
+        		$em->flush();
+
+        return $this->redirectToRoute('snippet');
+    }
+            
 		  return $this->render('default/new.html.twig', array(
             'form' => $form->createView(),
         ));
