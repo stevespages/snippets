@@ -61,9 +61,15 @@ class SnippetController extends Controller
 
         return $this->redirectToRoute('snippet');
     }
+    
+    	  $repository = $this->getDoctrine()->getRepository(Snippet::class);
+    	  $snippets = $repository->findAll();
+    	  $snippet_dump = "<pre>".var_dump($snippets)."</pre>";
+    	  $x = $snippets[0];
+    	  $y = $x->getSnip();
             
 		  return $this->render('default/new.html.twig', array(
-            'form' => $form->createView(),
+            'form' => $form->createView(), 'y' => $y,
         ));
             
         
