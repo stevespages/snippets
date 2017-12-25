@@ -64,16 +64,9 @@ class SnippetController extends Controller
     
     	  $repository = $this->getDoctrine()->getRepository(Snippet::class);
     	  $snippets = $repository->findAll();
-    	  $snippet_dump = "<pre>".var_dump($snippets)."</pre>";
-    	  $x = $snippets[0];
-    	  $y = $x->getSnip();
             
 		  return $this->render('default/new.html.twig', array(
-            'form' => $form->createView(), 'y' => $y,
+            'form' => $form->createView(), 'snippets' => $snippets,
         ));
-            
-        
-
-        //return new Response('Saved new product with id '.$snippet->getId());    	
     }
 }

@@ -2,3 +2,15 @@
 {{ form_start(form) }}
 {{ form_widget(form) }}
 {{ form_end(form) }}
+<p><a href="">Cancel</a></p>
+<table border='1'>
+<th>Snippet</th><th>Description</th><th>Language</th>
+{% for snippet in snippets %}
+        <tr><td>{{ snippet.snip }}</td>
+            <td>{{ snippet.description }}</td>
+            <td>{{ snippet.language }}</td>
+            <td><a href="{{ path('snippet', {'action': 'edit', 'id': snippet.id})}}">Edit</a></td>
+            <td>Delete</td>
+        </tr>
+{% endfor %}
+</table>
