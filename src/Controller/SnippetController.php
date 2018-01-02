@@ -53,20 +53,29 @@ class SnippetController extends Controller
         		// but, the original `$task` variable has also been updated
         		$snippet = $form->getData();
 
-        		// ... perform some action, such as saving the task to the database
-        		// for example, if Task is a Doctrine entity, save it!
+        		// if submission is a new snippet:
         		$em = $this->getDoctrine()->getManager();
         		$em->persist($snippet);
         		$em->flush();
 
-        return $this->redirectToRoute('snippet');
+        //return $this->redirectToRoute('snippet');
+        
+        //$request->query->get()
+        
+        
     }
+    
+		  $a = $request->query->get('action');    
     
     	  $repository = $this->getDoctrine()->getRepository(Snippet::class);
     	  $snippets = $repository->findAll();
+    	  
+    	  dump($a);
             
 		  return $this->render('default/new.html.twig', array(
             'form' => $form->createView(), 'snippets' => $snippets,
         ));
+        
+        
     }
 }

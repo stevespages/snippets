@@ -15,8 +15,9 @@ use App\Entity\Snippet;
 
 class SnippetController extends Controller
 {
+	 // cut out: , name="snippet"
     /**
-     * @Route("/snippet", name="snippet")
+     * @Route("/snippet")
      */
     //public function index()
 	 public function new(Request $request)
@@ -44,7 +45,6 @@ class SnippetController extends Controller
             ->add('description', TextType::class)
             ->add('language', TextType::class)
             ->add('save', SubmitType::class, array('label' => 'Snip'))
-            ->add('any old junk')
             ->getForm();
             
         $form->handleRequest($request);
@@ -54,20 +54,29 @@ class SnippetController extends Controller
         		// but, the original `$task` variable has also been updated
         		$snippet = $form->getData();
 
-        		// ... perform some action, such as saving the task to the database
-        		// for example, if Task is a Doctrine entity, save it!
+        		// if submission is a new snippet:
         		$em = $this->getDoctrine()->getManager();
         		$em->persist($snippet);
         		$em->flush();
 
-        return $this->redirectToRoute('snippet');
+        //return $this->redirectToRoute('snippet');
+        
+        //$request->query->get()
+        
+        
     }
+    
+		  $a = $request->query->get('action');    
     
     	  $repository = $this->getDoctrine()->getRepository(Snippet::class);
     	  $snippets = $repository->findAll();
+    	  
+    	  dump($a);
             
 		  return $this->render('default/new.html.twig', array(
             'form' => $form->createView(), 'snippets' => $snippets,
         ));
+        
+        
     }
 }
